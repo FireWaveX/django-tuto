@@ -27,4 +27,14 @@ urlpatterns = [
 	path('', include(router.urls)),
 	path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
+    path(r'Customer/', views.CustomerList.as_view()),
+    path(r'Customer/<int:pk>', views.CustomerList.as_view()),
 ]
+
+
+"""
+ # Targets
+    url(r'^target/$', TA01Customizing.as_view(), name='addGetTarget'),
+    url(r'^target/(?P<pk>\w{0,50})/$', TA01Customizing.as_view(), name='updateTarget'),
+    url(r'^delTargets/$', TA01DeleteCustomizing.as_view(), name='delTargets'),
+"""

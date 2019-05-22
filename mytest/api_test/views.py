@@ -1,9 +1,26 @@
 from django.shortcuts import render
-
-# Create your views here.
-from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from api_test.serializers import UserSerializer, GroupSerializer
+
+from django.contrib.auth.models import User, Group
+from .models import Customer, Order
+from .serializers import CustomerSerializer, OrderSerializer, UserSerializer, GroupSerializer
+from rest_framework import mixins, generics
+
+# Communication with external apps
+# Customer.objects.all() = select * in customer
+class CustomerList(mixins.ListModelMixin, 
+    mixins.CreateModelMixin, 
+    generics.GenericAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+    # authentication_classes = ()
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 class UserViewSet(viewsets.ModelViewSet):
